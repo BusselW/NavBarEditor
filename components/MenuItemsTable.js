@@ -16,7 +16,7 @@ export default function MenuItemsTable({
         
         const icons = ['', 'subdirectory_arrow_right', 'subdirectory_arrow_right', 'subdirectory_arrow_right'];
         return h('span', {
-            className: 'hierarchy-icon'
+            className: 'hierarchy-icon material-icons'
         }, icons[Math.min(level, 3)]);
     };
 
