@@ -54,10 +54,15 @@ export default function StatusBar({ status, message, listInfo, onRetry }) {
                         className: 'text-sm font-semibold text-gray-800'
                     }, message),
                     listInfo && h('div', {
+                        key: 'list-info',
                         className: 'text-xs text-gray-600 mt-1'
                     }, [
-                        h('div', {}, `📍 ${listInfo.siteUrl}`),
-                        h('div', {}, `📋 ${listInfo.listName} • ${listInfo.itemCount} items`)
+                        h('div', {
+                            key: 'site-url'
+                        }, `📍 ${listInfo.siteUrl}`),
+                        h('div', {
+                            key: 'list-name'
+                        }, `📋 ${listInfo.listName} • ${listInfo.itemCount} items`)
                     ])
                 ])
             ]),

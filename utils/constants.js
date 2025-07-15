@@ -14,6 +14,13 @@ export const FIELD_NAMES = {
     ICON: 'Icon'
 };
 
+// Common SharePoint field encodings
+export const ENCODED_FIELD_NAMES = {
+    VOLGORDE_ID_ENCODED: 'VolgordeID',
+    PARENT_ID_ENCODED: 'ParentID1',
+    PARENT_ID_FALLBACK_ENCODED: 'ParentID'
+};
+
 export const MENU_ITEM_DEFAULTS = {
     title: '',
     url: '',

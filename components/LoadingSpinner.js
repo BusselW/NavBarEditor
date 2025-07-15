@@ -21,7 +21,7 @@ export default function LoadingSpinner({ size = 'md', text = 'Laden...', classNa
             key: 'text',
             className: 'text-gray-600 text-sm'
         }, text)
-    ]);
+    ].filter(Boolean));
 }
 
 export function TableLoadingSpinner({ colSpan = 1, text = 'Items laden...' }) {
@@ -45,15 +45,18 @@ export function FullPageLoader({ text = 'Applicatie laden...' }) {
         className: 'min-h-screen flex items-center justify-center bg-gray-50'
     }, [
         h('div', {
+            key: 'loader-content',
             className: 'text-center'
         }, [
             h(LoadingSpinner, {
+                key: 'spinner',
                 size: 'xl',
                 text,
                 className: 'mb-4'
             }),
             
             h('p', {
+                key: 'subtitle',
                 className: 'text-gray-500 text-sm'
             }, 'Een moment geduld...')
         ])

@@ -11,12 +11,48 @@ class MenuService {
     // Get menu items with hierarchy support
     async getMenuItems(siteUrl, listGuid, forceRefresh = false) {
         try {
-            const items = await this.sharepointService.getListItems(siteUrl, listGuid, {
-                select: 'Id,Title,URL,ParentID1,ParentID,VolgordeID,Icon',
-                orderby: 'VolgordeID asc,Title asc',
-                top: 5000,
-                forceRefresh
-            });
+            // Progressive field loading - try with all fields first, then fall back
+            let items;
+            let selectFields = 'Id,Title,URL,ParentID1,ParentID,VolgordeID,Icon';
+            
+            try {
+                items = await this.sharepointService.getListItems(siteUrl, listGuid, {
+                    select: selectFields,
+                    orderby: 'VolgordeID asc,Title asc',
+                    top: 5000,
+                    forceRefresh
+                });
+            } catch (error) {
+                console.warn('Failed with all fields, trying alternative field names:', error);
+                
+                // Try with different field combinations
+                const fallbackAttempts = [
+                    'Id,Title,URL,ParentID1,Icon', // Try without VolgordeID
+                    'Id,Title,URL,Icon', // Try with minimal fields
+                    'Id,Title' // Absolute minimum
+                ];
+                
+                for (const fields of fallbackAttempts) {
+                    try {
+                        console.log(`Trying with fields: ${fields}`);
+                        items = await this.sharepointService.getListItems(siteUrl, listGuid, {
+                            select: fields,
+                            orderby: 'Title asc',
+                            top: 5000,
+                            forceRefresh
+                        });
+                        console.log(`Success with fields: ${fields}`);
+                        break;
+                    } catch (fallbackError) {
+                        console.warn(`Failed with fields ${fields}:`, fallbackError);
+                        continue;
+                    }
+                }
+                
+                if (!items) {
+                    throw new Error('Unable to load items with any field combination');
+                }
+            }
 
             // Determine which parent field is used
             const parentField = this.determineParentField(items);

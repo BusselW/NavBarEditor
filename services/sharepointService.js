@@ -30,9 +30,20 @@ class SharePointService {
             const response = await fetch(url, finalOptions);
             
             if (!response.ok) {
+                let errorMessage = `HTTP ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.error && errorData.error.message) {
+                        errorMessage = errorData.error.message.value || errorData.error.message;
+                    }
+                } catch (e) {
+                    // If JSON parsing fails, use the status text
+                    errorMessage = response.statusText || errorMessage;
+                }
+                
                 throw {
                     status: response.status,
-                    message: await response.text()
+                    message: errorMessage
                 };
             }
 
@@ -40,6 +51,15 @@ class SharePointService {
             return data;
         } catch (error) {
             console.error('SharePoint API request failed:', error);
+            
+            // If it's a network error or similar, format it properly
+            if (!error.status) {
+                throw {
+                    status: 500,
+                    message: error.message || 'Network error occurred'
+                };
+            }
+            
             throw error;
         }
     }

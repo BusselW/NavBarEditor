@@ -200,9 +200,11 @@ function NavbarEditor() {
                     ]),
                     h('div', {}, [
                         h('h1', {
+                            key: 'title',
                             className: 'text-2xl font-bold text-gray-800'
                         }, 'Navigatie Menu Editor'),
                         h('p', {
+                            key: 'subtitle',
                             className: 'text-sm text-gray-600 mt-1'
                         }, 'Professionele menu beheer tool')
                     ])
@@ -216,6 +218,7 @@ function NavbarEditor() {
                         className: 'btn-modern btn-primary px-4 py-2 text-sm'
                     }, [
                         h('span', {
+                            key: 'back-icon',
                             className: 'material-icons text-sm'
                         }, 'arrow_back'),
                         'Terug naar Menu'
@@ -255,6 +258,7 @@ function NavbarEditor() {
                             disabled: isLoading || status === STATUS_TYPES.ERROR
                         }, [
                             h('span', {
+                                key: 'add-icon',
                                 className: 'material-icons text-sm'
                             }, 'add'),
                             'Nieuw Menu Item'
@@ -264,6 +268,7 @@ function NavbarEditor() {
                             className: 'text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg'
                         }, [
                             h('span', {
+                                key: 'info-icon',
                                 className: 'material-icons text-sm mr-1 text-brand-blue-600'
                             }, 'info'),
                             `${menuData.items.length} menu items geladen`
@@ -276,6 +281,7 @@ function NavbarEditor() {
                         disabled: isLoading
                     }, [
                         h('span', {
+                            key: 'refresh-icon',
                             className: `material-icons text-sm ${isLoading ? 'animate-spin' : ''}`
                         }, 'refresh'),
                         'Vernieuwen'
