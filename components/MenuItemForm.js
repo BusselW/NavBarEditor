@@ -31,7 +31,7 @@ export default function MenuItemForm({
                 url: item.URL ? (item.URL.Url || item.URL) : '',
                 icon: item.Icon || MENU_ITEM_DEFAULTS.icon,
                 volgordeId: item.VolgordeID || MENU_ITEM_DEFAULTS.volgordeId,
-                parentId: item.ParentID1 || null
+                parentId: item.ParentID1 || item.ParentID || null
             });
         } else {
             // For new items, suggest next order number

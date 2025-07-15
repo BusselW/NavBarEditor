@@ -41,18 +41,21 @@ class MenuService {
     // Determine which parent field is used in the list
     determineParentField(items) {
         // Check if any items have ParentID1 values
-        const hasParentID1 = items.some(item => item.ParentID1 !== null && item.ParentID1 !== undefined);
+        const hasParentID1 = items.some(item => item.ParentID1 !== null && item.ParentID1 !== undefined && item.ParentID1 !== '');
         
         // Check if any items have ParentID values
-        const hasParentID = items.some(item => item.ParentID !== null && item.ParentID !== undefined);
+        const hasParentID = items.some(item => item.ParentID !== null && item.ParentID !== undefined && item.ParentID !== '');
         
         // Prefer ParentID1 if available, otherwise use ParentID
         if (hasParentID1) {
+            console.log('Using ParentID1 field for parent relationships');
             return FIELD_NAMES.PARENT_ID;
         } else if (hasParentID) {
+            console.log('Using ParentID field for parent relationships');
             return FIELD_NAMES.PARENT_ID_FALLBACK;
         }
         
+        console.log('No parent field data found, defaulting to ParentID1');
         return FIELD_NAMES.PARENT_ID; // Default
     }
 
@@ -76,8 +79,8 @@ class MenuService {
     }
 
     // Create new menu item
-    async createMenuItem(siteUrl, listGuid, itemData, entityType) {
-        const formData = this.prepareItemData(itemData);
+    async createMenuItem(siteUrl, listGuid, itemData, entityType, parentField = FIELD_NAMES.PARENT_ID) {
+        const formData = this.prepareItemData(itemData, parentField);
         
         try {
             const result = await this.sharepointService.createListItem(siteUrl, listGuid, formData, entityType);
@@ -88,8 +91,8 @@ class MenuService {
     }
 
     // Update existing menu item
-    async updateMenuItem(siteUrl, listGuid, itemId, itemData, entityType) {
-        const formData = this.prepareItemData(itemData);
+    async updateMenuItem(siteUrl, listGuid, itemId, itemData, entityType, parentField = FIELD_NAMES.PARENT_ID) {
+        const formData = this.prepareItemData(itemData, parentField);
         
         try {
             const result = await this.sharepointService.updateListItem(siteUrl, listGuid, itemId, formData, entityType);
@@ -110,7 +113,7 @@ class MenuService {
     }
 
     // Prepare item data for SharePoint
-    prepareItemData(itemData) {
+    prepareItemData(itemData, parentField = FIELD_NAMES.PARENT_ID) {
         const formData = {
             [FIELD_NAMES.TITLE]: itemData.title || MENU_ITEM_DEFAULTS.title,
             [FIELD_NAMES.ICON]: itemData.icon || MENU_ITEM_DEFAULTS.icon
@@ -127,9 +130,9 @@ class MenuService {
             formData[FIELD_NAMES.URL] = null;
         }
 
-        // Handle parent ID
+        // Handle parent ID - use the detected parent field
         if (itemData.parentId !== undefined) {
-            formData[FIELD_NAMES.PARENT_ID] = itemData.parentId ? parseInt(itemData.parentId) : null;
+            formData[parentField] = itemData.parentId ? parseInt(itemData.parentId) : null;
         }
 
         // Handle order ID
@@ -141,13 +144,13 @@ class MenuService {
     }
 
     // Get available parent items for dropdown
-    getAvailableParents(items, excludeItemId = null) {
+    getAvailableParents(items, excludeItemId = null, parentField = FIELD_NAMES.PARENT_ID) {
         return items
             .filter(item => item.Id !== excludeItemId)
             .map(item => ({
                 value: item.Id,
                 label: item.Title || 'Naamloos item',
-                level: getHierarchyLevel(item, items)
+                level: getHierarchyLevel(item, items, parentField)
             }))
             .sort((a, b) => {
                 if (a.level !== b.level) return a.level - b.level;

@@ -36,9 +36,11 @@ export default function MenuItemsTable({
     };
 
     const renderParentField = (item) => {
-        if (!item.ParentID1) return h('span', { className: 'text-gray-400 italic' }, 'Hoofdniveau');
+        // Check both possible parent fields
+        const parentId = item.ParentID1 || item.ParentID;
+        if (!parentId) return h('span', { className: 'text-gray-400 italic' }, 'Hoofdniveau');
         
-        const parent = items.find(i => i.Id === item.ParentID1);
+        const parent = items.find(i => i.Id === parentId);
         if (!parent) return h('span', { className: 'text-gray-400 italic' }, 'Onbekend');
         
         return h('span', {

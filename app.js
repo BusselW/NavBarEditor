@@ -80,7 +80,7 @@ function NavbarEditor() {
             setMenuData(data);
             
             // Update available parents for form
-            const parents = menuService.getAvailableParents(data.items);
+            const parents = menuService.getAvailableParents(data.items, null, data.parentField);
             setAvailableParents(parents);
             
         } catch (error) {
@@ -131,7 +131,8 @@ function NavbarEditor() {
                     listInfo.listGuid,
                     editingItem.Id,
                     formData,
-                    listInfo.entityType
+                    listInfo.entityType,
+                    menuData.parentField
                 );
                 setStatusMessage('Menu item bijgewerkt');
             } else {
@@ -139,7 +140,8 @@ function NavbarEditor() {
                     listInfo.siteUrl,
                     listInfo.listGuid,
                     formData,
-                    listInfo.entityType
+                    listInfo.entityType,
+                    menuData.parentField
                 );
                 setStatusMessage('Menu item aangemaakt');
             }
@@ -274,7 +276,7 @@ function NavbarEditor() {
         showForm && h(MenuItemForm, {
             key: 'form',
             item: editingItem,
-            availableParents: availableParents.filter(p => p.value !== editingItem?.Id),
+            availableParents: menuService.getAvailableParents(menuData.items, editingItem?.Id, menuData.parentField),
             onSave: handleSaveItem,
             onCancel: handleFormCancel,
             onDelete: editingItem ? () => handleDeleteItem(editingItem) : null,
