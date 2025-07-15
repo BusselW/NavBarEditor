@@ -16,7 +16,7 @@ export default function MenuItemsTable({
         
         const icons = ['', 'subdirectory_arrow_right', 'subdirectory_arrow_right', 'subdirectory_arrow_right'];
         return h('span', {
-            className: 'material-icons text-brand-orange mr-2 text-sm'
+            className: 'hierarchy-icon'
         }, icons[Math.min(level, 3)]);
     };
 
@@ -89,7 +89,7 @@ export default function MenuItemsTable({
                 className: 'text-center font-medium text-gray-700'
             }, [
                 h('div', {
-                    className: 'inline-flex items-center justify-center w-8 h-8 bg-brand-blue-100 text-brand-blue-700 rounded-full text-sm font-semibold'
+                    className: 'icon-badge text-sm'
                 }, item.VolgordeID || '—')
             ]),
             
@@ -122,7 +122,7 @@ export default function MenuItemsTable({
                 className: 'text-center'
             }, [
                 h('div', {
-                    className: 'inline-flex items-center justify-center w-8 h-8 bg-brand-orange-100 text-brand-orange-700 rounded-full'
+                    className: 'icon-badge icon-badge-orange text-sm'
                 }, [
                     h('span', {
                         className: 'material-icons text-sm',
@@ -135,8 +135,8 @@ export default function MenuItemsTable({
             h('td', {
                 className: 'text-sm'
             }, [
-                h('code', {
-                    className: 'text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md font-mono'
+                h('span', {
+                    className: 'tag-modern'
                 }, item.Icon || 'chevron_right')
             ]),
             
@@ -153,25 +153,25 @@ export default function MenuItemsTable({
         // Header
         h('div', {
             key: 'header',
-            className: 'flex justify-between items-center bg-gradient-to-r from-brand-orange-500 to-brand-orange-600 p-6 text-white'
+            className: 'flex justify-between items-center bg-gradient-to-r from-brand-orange-500 to-brand-orange-600 p-8 text-white'
         }, [
             h('div', {
-                className: 'flex items-center space-x-3'
+                className: 'flex items-center space-x-4'
             }, [
                 h('div', {
-                    className: 'w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center'
+                    className: 'w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm'
                 }, [
                     h('span', {
-                        className: 'material-icons text-sm text-white'
+                        className: 'material-icons text-lg text-white'
                     }, 'list')
                 ]),
                 h('div', {}, [
                     h('h2', {
-                        className: 'text-xl font-semibold'
+                        className: 'text-2xl font-bold'
                     }, 'Navigatie Items'),
                     h('p', {
-                        className: 'text-sm text-orange-100 mt-1'
-                    }, 'Beheer uw menu structuur')
+                        className: 'text-sm text-orange-100 mt-1 font-medium'
+                    }, 'Beheer uw menu structuur en hiërarchie')
                 ])
             ]),
             
@@ -179,15 +179,15 @@ export default function MenuItemsTable({
                 className: 'flex items-center space-x-4'
             }, [
                 h('div', {
-                    className: 'bg-white bg-opacity-20 px-3 py-2 rounded-lg'
+                    className: 'bg-white bg-opacity-20 px-4 py-2 rounded-xl backdrop-blur-sm'
                 }, [
                     h('span', {
-                        className: 'text-sm font-medium'
+                        className: 'text-sm font-semibold'
                     }, `${items.length} items`)
                 ]),
                 
                 h('button', {
-                    className: 'bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2',
+                    className: 'bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-xl transition-all duration-200 flex items-center space-x-2 backdrop-blur-sm',
                     onClick: onRefresh,
                     disabled: isLoading
                 }, [
@@ -195,7 +195,7 @@ export default function MenuItemsTable({
                         className: `material-icons text-sm ${isLoading ? 'animate-spin' : ''}`
                     }, 'refresh'),
                     h('span', {
-                        className: 'text-sm font-medium'
+                        className: 'text-sm font-semibold'
                     }, 'Vernieuwen')
                 ])
             ])

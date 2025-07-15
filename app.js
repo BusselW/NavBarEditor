@@ -178,24 +178,24 @@ function NavbarEditor() {
     }
 
     return h('div', {
-        className: 'min-h-screen bg-gradient-to-br from-gray-50 to-blue-50'
+        className: 'min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50'
     }, [
         // Header
         h('header', {
             key: 'header',
-            className: 'sticky top-0 z-40 glass-effect shadow-lg border-b border-white/20'
+            className: 'sticky top-0 z-40 glass-effect header-glow'
         }, [
             h('div', {
-                className: 'px-6 py-4 flex justify-between items-center'
+                className: 'px-6 py-6 flex justify-between items-center'
             }, [
                 h('div', {
-                    className: 'flex items-center space-x-3'
+                    className: 'flex items-center space-x-4'
                 }, [
                     h('div', {
-                        className: 'w-10 h-10 gradient-bg rounded-xl flex items-center justify-center shadow-lg'
+                        className: 'icon-badge'
                     }, [
                         h('span', {
-                            className: 'material-icons text-white'
+                            className: 'material-icons'
                         }, 'edit')
                     ]),
                     h('div', {}, [
@@ -206,7 +206,7 @@ function NavbarEditor() {
                         h('p', {
                             key: 'subtitle',
                             className: 'text-sm text-gray-600 mt-1'
-                        }, 'Professionele menu beheer tool')
+                        }, 'Professionele menu beheer voor SharePoint')
                     ])
                 ]),
                 
@@ -215,7 +215,7 @@ function NavbarEditor() {
                 }, [
                     h('a', {
                         href: `${SHAREPOINT_CONFIG.MENU_PATH}`,
-                        className: 'btn-modern btn-primary px-4 py-2 text-sm'
+                        className: 'btn-modern btn-ghost px-4 py-2 text-sm'
                     }, [
                         h('span', {
                             key: 'back-icon',
@@ -232,6 +232,29 @@ function NavbarEditor() {
             key: 'main',
             className: 'max-w-7xl mx-auto p-6'
         }, [
+            // Breadcrumb
+            h('div', {
+                key: 'breadcrumb',
+                className: 'breadcrumb mb-6'
+            }, [
+                h('span', {
+                    className: 'material-icons text-sm mr-2'
+                }, 'home'),
+                'SharePoint',
+                h('span', {
+                    className: 'mx-2 text-gray-400'
+                }, '/'),
+                'Menu Beheer',
+                listInfo && h('span', {
+                    key: 'current-list',
+                    className: 'mx-2 text-gray-400'
+                }, '/'),
+                listInfo && h('span', {
+                    key: 'list-name',
+                    className: 'font-medium text-gray-700'
+                }, listInfo.listName)
+            ]),
+            
             // Status bar
             h(StatusBar, {
                 key: 'status',
@@ -244,13 +267,13 @@ function NavbarEditor() {
             // Action bar
             h('div', {
                 key: 'actions',
-                className: 'mb-8 card-modern p-6'
+                className: 'mb-8 action-bar-enhanced'
             }, [
                 h('div', {
                     className: 'flex justify-between items-center'
                 }, [
                     h('div', {
-                        className: 'flex items-center space-x-4'
+                        className: 'flex items-center space-x-6'
                     }, [
                         h('button', {
                             className: 'btn-modern btn-secondary px-6 py-3 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed',
@@ -265,18 +288,33 @@ function NavbarEditor() {
                         ]),
                         
                         h('div', {
-                            className: 'text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg'
+                            className: 'flex items-center space-x-4'
                         }, [
-                            h('span', {
-                                key: 'info-icon',
-                                className: 'material-icons text-sm mr-1 text-brand-blue-600'
-                            }, 'info'),
-                            `${menuData.items.length} menu items geladen`
+                            h('div', {
+                                className: 'tag-modern'
+                            }, [
+                                h('span', {
+                                    key: 'info-icon',
+                                    className: 'material-icons text-sm mr-1'
+                                }, 'inventory'),
+                                `${menuData.items.length} items`
+                            ]),
+                            
+                            listInfo && h('div', {
+                                key: 'list-info',
+                                className: 'tag-modern'
+                            }, [
+                                h('span', {
+                                    key: 'list-icon',
+                                    className: 'material-icons text-sm mr-1'
+                                }, 'list'),
+                                listInfo.listName
+                            ])
                         ])
                     ]),
                     
                     h('button', {
-                        className: 'btn-modern bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 text-sm disabled:opacity-50',
+                        className: 'btn-modern bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 text-sm disabled:opacity-50 border border-gray-200',
                         onClick: () => loadMenuItems(),
                         disabled: isLoading
                     }, [
@@ -309,7 +347,20 @@ function NavbarEditor() {
             onCancel: handleFormCancel,
             onDelete: editingItem ? () => handleDeleteItem(editingItem) : null,
             isLoading
-        })
+        }),
+        
+        // Floating action button
+        !showForm && h('button', {
+            key: 'floating-action',
+            className: 'floating-action btn-modern btn-secondary disabled:opacity-50 disabled:cursor-not-allowed',
+            onClick: handleCreateItem,
+            disabled: isLoading || status === STATUS_TYPES.ERROR,
+            title: 'Nieuw Menu Item'
+        }, [
+            h('span', {
+                className: 'material-icons'
+            }, 'add')
+        ])
     ]);
 }
 
