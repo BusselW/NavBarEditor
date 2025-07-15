@@ -183,7 +183,7 @@ function NavbarEditor() {
         // Header
         h('header', {
             key: 'header',
-            className: 'sticky top-0 z-40 glass-effect header-glow'
+            className: 'sticky top-0 z-40 bg-gradient-to-r from-brand-blue-600 to-brand-blue-700 text-white shadow-lg'
         }, [
             h('div', {
                 className: 'px-6 py-6 flex justify-between items-center'
@@ -192,20 +192,20 @@ function NavbarEditor() {
                     className: 'flex items-center space-x-4'
                 }, [
                     h('div', {
-                        className: 'icon-badge'
+                        className: 'w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm'
                     }, [
                         h('span', {
-                            className: 'material-icons'
+                            className: 'material-icons text-white'
                         }, 'edit')
                     ]),
                     h('div', {}, [
                         h('h1', {
                             key: 'title',
-                            className: 'text-2xl font-bold text-gray-800'
+                            className: 'text-2xl font-bold text-white'
                         }, 'Navigatie Menu Editor'),
                         h('p', {
                             key: 'subtitle',
-                            className: 'text-sm text-gray-600 mt-1'
+                            className: 'text-sm text-blue-100 mt-1'
                         }, 'Professionele menu beheer voor SharePoint')
                     ])
                 ]),
@@ -215,7 +215,7 @@ function NavbarEditor() {
                 }, [
                     h('a', {
                         href: `${SHAREPOINT_CONFIG.MENU_PATH}`,
-                        className: 'btn-modern btn-ghost px-4 py-2 text-sm'
+                        className: 'bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-xl transition-all duration-200 flex items-center space-x-2 backdrop-blur-sm text-white'
                     }, [
                         h('span', {
                             key: 'back-icon',
@@ -230,7 +230,7 @@ function NavbarEditor() {
         // Main content
         h('main', {
             key: 'main',
-            className: 'max-w-7xl mx-auto p-6'
+            className: 'w-full px-6 py-6'
         }, [
             // Breadcrumb
             h('div', {

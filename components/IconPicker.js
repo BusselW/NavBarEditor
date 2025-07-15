@@ -49,7 +49,7 @@ export default function IconPicker({ selectedIcon, onIconSelect, onClose }) {
     };
 
     return h('div', {
-        className: 'absolute z-20 mt-2 w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg p-4',
+        className: 'absolute z-20 mt-2 w-full max-w-lg bg-white border border-gray-300 rounded-lg shadow-lg p-4',
         onKeyDown: handleKeyDown
     }, [
         // Search input
@@ -72,7 +72,7 @@ export default function IconPicker({ selectedIcon, onIconSelect, onClose }) {
             className: 'max-h-64 overflow-y-auto'
         }, [
             h('div', {
-                className: 'grid grid-cols-8 gap-2'
+                className: 'grid grid-cols-10 gap-2'
             }, filteredIcons.map(icon => 
                 h('div', {
                     key: icon,
@@ -83,7 +83,7 @@ export default function IconPicker({ selectedIcon, onIconSelect, onClose }) {
                     title: icon
                 }, [
                     h('span', {
-                        className: 'material-icons text-lg'
+                        className: 'material-icons text-base'
                     }, icon)
                 ])
             ))
@@ -119,7 +119,7 @@ export function IconPreview({ icon, className = '' }) {
         className: `flex items-center justify-center w-10 h-10 bg-gray-100 rounded ${className}`
     }, [
         h('span', {
-            className: 'material-icons text-gray-600',
+            className: 'material-icons text-gray-600 text-lg',
             key: icon || 'default'
         }, icon || 'chevron_right')
     ]);
@@ -181,7 +181,7 @@ export function IconSelector({ selectedIcon, onIconSelect, disabled = false }) {
                 title: 'Selecteer icoon'
             }, [
                 h('span', {
-                    className: 'material-icons text-lg'
+                    className: 'material-icons text-base'
                 }, 'format_list_bulleted')
             ])
         ]),

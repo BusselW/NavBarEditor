@@ -149,7 +149,7 @@ export default function MenuItemForm({
                             className: 'w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center'
                         }, [
                             h('span', {
-                                className: 'material-icons text-white'
+                                className: 'material-icons text-white text-lg'
                             }, item ? 'edit' : 'add')
                         ]),
                         h('div', {}, [
