@@ -4,6 +4,7 @@ import { FullPageLoader } from './components/LoadingSpinner.js';
 import StatusBar from './components/StatusBar.js';
 import MenuItemsTable from './components/MenuItemsTable.js';
 import MenuItemForm from './components/MenuItemForm.js';
+import TourGuide, { TourTriggerButton } from './components/TourGuide.js';
 import sharepointService from './services/sharepointService.js';
 import menuService from './services/menuService.js';
 import { STATUS_TYPES, SHAREPOINT_CONFIG } from './utils/constants.js';
@@ -26,6 +27,7 @@ function NavbarEditor() {
     const [showForm, setShowForm] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
     const [availableParents, setAvailableParents] = useState([]);
+    const [showTour, setShowTour] = useState(false);
 
     // Initialize application
     useEffect(() => {
@@ -170,6 +172,18 @@ function NavbarEditor() {
         initializeApp();
     };
 
+    const handleStartTour = () => {
+        setShowTour(true);
+    };
+
+    const handleTourClose = () => {
+        setShowTour(false);
+    };
+
+    const handleTourOpenForm = () => {
+        handleCreateItem();
+    };
+
     // Show full page loader during initialization
     if (status === STATUS_TYPES.LOADING && !listInfo) {
         return h(FullPageLoader, {
@@ -213,6 +227,11 @@ function NavbarEditor() {
                 h('div', {
                     className: 'flex items-center space-x-3'
                 }, [
+                    h(TourTriggerButton, {
+                        onClick: handleStartTour,
+                        className: 'bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm'
+                    }),
+                    
                     h('a', {
                         href: `${SHAREPOINT_CONFIG.MENU_PATH}`,
                         className: 'bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-xl transition-all duration-200 flex items-center space-x-2 backdrop-blur-sm text-white'
@@ -360,7 +379,15 @@ function NavbarEditor() {
             h('span', {
                 className: 'material-icons'
             }, 'add')
-        ])
+        ]),
+        
+        // Tour guide
+        h(TourGuide, {
+            key: 'tour',
+            isOpen: showTour,
+            onClose: handleTourClose,
+            onOpenForm: handleTourOpenForm
+        })
     ]);
 }
 
