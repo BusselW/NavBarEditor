@@ -50,11 +50,11 @@ export default function MenuItemsTable({
 
     const renderActionButtons = (item) => {
         return h('div', {
-            className: 'flex items-center space-x-2'
+            className: 'flex items-center justify-center space-x-2'
         }, [
             h('button', {
                 key: 'edit',
-                className: 'p-1 text-brand-blue hover:text-brand-blue-dark hover:bg-blue-50 rounded transition-colors edit-item-btn',
+                className: 'p-2 text-brand-blue-600 hover:text-brand-blue-700 hover:bg-brand-blue-50 rounded-lg transition-all duration-200 edit-item-btn transform hover:scale-105',
                 onClick: () => onEdit(item),
                 title: 'Bewerken'
             }, [
@@ -65,7 +65,7 @@ export default function MenuItemsTable({
             
             h('button', {
                 key: 'delete',
-                className: 'p-1 text-red-600 hover:text-red-700 hover:bg-red-50 rounded transition-colors delete-item-btn',
+                className: 'p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 delete-item-btn transform hover:scale-105',
                 onClick: () => onDelete(item),
                 title: 'Verwijderen'
             }, [
@@ -82,90 +82,121 @@ export default function MenuItemsTable({
         
         return h('tr', {
             key: item.Id,
-            className: `hover:bg-gray-50 transition-colors ${level > 0 ? 'bg-gray-25' : ''}`
+            className: `transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-orange-50 ${level > 0 ? 'bg-gray-25' : ''}`
         }, [
             // Order
             h('td', {
-                className: 'text-center py-3 px-4 border-b border-gray-200'
-            }, item.VolgordeID || '—'),
+                className: 'text-center font-medium text-gray-700'
+            }, [
+                h('div', {
+                    className: 'inline-flex items-center justify-center w-8 h-8 bg-brand-blue-100 text-brand-blue-700 rounded-full text-sm font-semibold'
+                }, item.VolgordeID || '—')
+            ]),
             
             // Title with hierarchy
             h('td', {
-                className: `py-3 px-4 border-b border-gray-200 ${indentClass}`
+                className: `${indentClass}`
             }, [
                 h('div', {
                     className: 'flex items-center'
                 }, [
                     renderHierarchyIcon(level),
                     h('span', {
-                        className: 'font-medium text-gray-800'
+                        className: 'font-semibold text-gray-800 text-sm'
                     }, item.Title || 'Naamloos item')
                 ])
             ]),
             
             // URL
             h('td', {
-                className: 'py-3 px-4 border-b border-gray-200'
+                className: 'text-sm'
             }, renderUrlField(item)),
             
             // Parent
             h('td', {
-                className: 'py-3 px-4 border-b border-gray-200'
+                className: 'text-sm'
             }, renderParentField(item)),
             
             // Icon preview
             h('td', {
-                className: 'text-center py-3 px-4 border-b border-gray-200'
+                className: 'text-center'
             }, [
-                h('span', {
-                    className: 'material-icons text-gray-600',
-                    title: item.Icon || 'Geen icoon'
-                }, item.Icon || 'chevron_right')
+                h('div', {
+                    className: 'inline-flex items-center justify-center w-8 h-8 bg-brand-orange-100 text-brand-orange-700 rounded-full'
+                }, [
+                    h('span', {
+                        className: 'material-icons text-sm',
+                        title: item.Icon || 'Geen icoon'
+                    }, item.Icon || 'chevron_right')
+                ])
             ]),
             
             // Icon name
             h('td', {
-                className: 'py-3 px-4 border-b border-gray-200'
+                className: 'text-sm'
             }, [
                 h('code', {
-                    className: 'text-sm bg-gray-100 px-2 py-1 rounded'
+                    className: 'text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md font-mono'
                 }, item.Icon || 'chevron_right')
             ]),
             
             // Actions
             h('td', {
-                className: 'text-center py-3 px-4 border-b border-gray-200'
+                className: 'text-center'
             }, renderActionButtons(item))
         ]);
     };
 
     return h('div', {
-        className: 'bg-white border border-gray-200 rounded-lg shadow-md'
+        className: 'card-modern overflow-hidden'
     }, [
         // Header
         h('div', {
             key: 'header',
-            className: 'flex justify-between items-center border-b border-gray-200 bg-brand-orange p-4'
+            className: 'flex justify-between items-center bg-gradient-to-r from-brand-orange-500 to-brand-orange-600 p-6 text-white'
         }, [
-            h('h2', {
-                className: 'text-lg font-semibold text-white'
-            }, 'Navigatie Items'),
-            
             h('div', {
                 className: 'flex items-center space-x-3'
             }, [
-                h('span', {
-                    className: 'text-white text-sm'
-                }, `${items.length} items`),
+                h('div', {
+                    className: 'w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center'
+                }, [
+                    h('span', {
+                        className: 'material-icons text-sm text-white'
+                    }, 'list')
+                ]),
+                h('div', {}, [
+                    h('h2', {
+                        className: 'text-xl font-semibold'
+                    }, 'Navigatie Items'),
+                    h('p', {
+                        className: 'text-sm text-orange-100 mt-1'
+                    }, 'Beheer uw menu structuur')
+                ])
+            ]),
+            
+            h('div', {
+                className: 'flex items-center space-x-4'
+            }, [
+                h('div', {
+                    className: 'bg-white bg-opacity-20 px-3 py-2 rounded-lg'
+                }, [
+                    h('span', {
+                        className: 'text-sm font-medium'
+                    }, `${items.length} items`)
+                ]),
                 
                 h('button', {
-                    className: 'bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-1 rounded transition-colors',
+                    className: 'bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-2',
                     onClick: onRefresh,
                     disabled: isLoading
                 }, [
                     h('span', {
                         className: `material-icons text-sm ${isLoading ? 'animate-spin' : ''}`
-                    }, 'refresh')
+                    }, 'refresh'),
+                    h('span', {
+                        className: 'text-sm font-medium'
+                    }, 'Vernieuwen')
                 ])
             ])
         ]),
@@ -176,40 +207,39 @@ export default function MenuItemsTable({
             className: 'overflow-x-auto'
         }, [
             h('table', {
-                className: 'min-w-full'
+                className: 'min-w-full table-modern'
             }, [
                 // Table header
                 h('thead', {
-                    key: 'thead',
-                    className: 'bg-brand-blue-dark'
+                    key: 'thead'
                 }, [
                     h('tr', {}, [
                         h('th', {
-                            className: 'text-center text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-center text-xs font-semibold uppercase tracking-wider'
                         }, 'Volgorde'),
                         
                         h('th', {
-                            className: 'text-left text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-left text-xs font-semibold uppercase tracking-wider'
                         }, 'Titel'),
                         
                         h('th', {
-                            className: 'text-left text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-left text-xs font-semibold uppercase tracking-wider'
                         }, 'URL'),
                         
                         h('th', {
-                            className: 'text-left text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-left text-xs font-semibold uppercase tracking-wider'
                         }, 'Onderliggend aan'),
                         
                         h('th', {
-                            className: 'text-center text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-center text-xs font-semibold uppercase tracking-wider'
                         }, 'Icoon'),
                         
                         h('th', {
-                            className: 'text-left text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-left text-xs font-semibold uppercase tracking-wider'
                         }, 'Icoon Naam'),
                         
                         h('th', {
-                            className: 'text-center text-xs font-medium text-white uppercase tracking-wider py-3 px-4 border-b border-black'
+                            className: 'text-center text-xs font-semibold uppercase tracking-wider'
                         }, 'Acties')
                     ])
                 ]),

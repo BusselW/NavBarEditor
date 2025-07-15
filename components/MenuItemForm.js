@@ -128,30 +128,50 @@ export default function MenuItemForm({
     const isFormDisabled = isLoading || isSubmitting;
 
     return h('div', {
-        className: 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
+        className: 'fixed inset-0 z-50 flex items-center justify-center modal-backdrop'
     }, [
         h('div', {
             key: 'modal',
-            className: 'bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col fade-in'
+            className: 'card-modern w-full max-w-2xl max-h-[90vh] flex flex-col fade-in m-4 overflow-hidden'
         }, [
             // Header
             h('div', {
                 key: 'header',
-                className: 'p-4 border-b border-gray-200 flex justify-between items-center'
+                className: 'bg-gradient-to-r from-brand-blue-600 to-brand-blue-700 p-6 text-white'
             }, [
-                h('h3', {
-                    className: 'text-lg font-semibold text-gray-800'
-                }, item ? 'Menu Item Bewerken' : 'Nieuw Menu Item'),
-                
-                h('button', {
-                    type: 'button',
-                    className: 'text-gray-400 hover:text-gray-600 focus:outline-none',
-                    onClick: onCancel,
-                    disabled: isFormDisabled
+                h('div', {
+                    className: 'flex items-center justify-between'
                 }, [
-                    h('span', {
-                        className: 'material-icons'
-                    }, 'close')
+                    h('div', {
+                        className: 'flex items-center space-x-3'
+                    }, [
+                        h('div', {
+                            className: 'w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center'
+                        }, [
+                            h('span', {
+                                className: 'material-icons text-white'
+                            }, item ? 'edit' : 'add')
+                        ]),
+                        h('div', {}, [
+                            h('h3', {
+                                className: 'text-xl font-bold'
+                            }, item ? 'Menu Item Bewerken' : 'Nieuw Menu Item'),
+                            h('p', {
+                                className: 'text-sm text-blue-100 mt-1'
+                            }, item ? 'Wijzig de eigenschappen van dit menu item' : 'Voeg een nieuw menu item toe')
+                        ])
+                    ]),
+                    
+                    h('button', {
+                        type: 'button',
+                        className: 'p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors',
+                        onClick: onCancel,
+                        disabled: isFormDisabled
+                    }, [
+                        h('span', {
+                            className: 'material-icons text-white'
+                        }, 'close')
+                    ])
                 ])
             ]),
             
@@ -159,7 +179,7 @@ export default function MenuItemForm({
             h('form', {
                 key: 'form',
                 onSubmit: handleSubmit,
-                className: 'p-4 overflow-y-auto flex-1'
+                className: 'p-6 overflow-y-auto flex-1 bg-gray-50'
             }, [
                 // Title field
                 h('div', {
@@ -176,8 +196,8 @@ export default function MenuItemForm({
                         id: 'title',
                         value: formData.title,
                         onChange: (e) => handleInputChange('title', e.target.value),
-                        className: `block w-full border rounded-md shadow-sm focus:ring focus:ring-brand-blue/20 focus:border-brand-blue p-2 text-sm ${
-                            errors.title ? 'border-red-500' : 'border-gray-300'
+                        className: `input-modern w-full ${
+                            errors.title ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''
                         }`,
                         disabled: isFormDisabled
                     }),
@@ -203,8 +223,8 @@ export default function MenuItemForm({
                         value: formData.url,
                         onChange: (e) => handleInputChange('url', e.target.value),
                         placeholder: 'https://example.com',
-                        className: `block w-full border rounded-md shadow-sm focus:ring focus:ring-brand-blue/20 focus:border-brand-blue p-2 text-sm ${
-                            errors.url ? 'border-red-500' : 'border-gray-300'
+                        className: `input-modern w-full ${
+                            errors.url ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''
                         }`,
                         disabled: isFormDisabled
                     }),
@@ -234,7 +254,7 @@ export default function MenuItemForm({
                             type: 'text',
                             value: formData.icon,
                             onChange: (e) => handleInputChange('icon', e.target.value),
-                            className: 'flex-1 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-brand-blue/20 focus:border-brand-blue p-2 text-sm',
+                            className: 'input-modern flex-1',
                             disabled: isFormDisabled
                         }),
                         
@@ -266,8 +286,8 @@ export default function MenuItemForm({
                         value: formData.volgordeId,
                         onChange: (e) => handleInputChange('volgordeId', e.target.value),
                         min: '0',
-                        className: `block w-full border rounded-md shadow-sm focus:ring focus:ring-brand-blue/20 focus:border-brand-blue p-2 text-sm ${
-                            errors.volgordeId ? 'border-red-500' : 'border-gray-300'
+                        className: `input-modern w-full ${
+                            errors.volgordeId ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''
                         }`,
                         disabled: isFormDisabled
                     }),
@@ -291,7 +311,7 @@ export default function MenuItemForm({
                         id: 'parent',
                         value: formData.parentId || '',
                         onChange: (e) => handleInputChange('parentId', e.target.value || null),
-                        className: 'block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-brand-blue/20 focus:border-brand-blue p-2 text-sm',
+                        className: 'input-modern w-full',
                         disabled: isFormDisabled
                     }, [
                         h('option', {
@@ -312,17 +332,17 @@ export default function MenuItemForm({
             // Footer
             h('div', {
                 key: 'footer',
-                className: 'p-4 border-t border-gray-200 flex justify-between items-center'
+                className: 'p-6 bg-white border-t border-gray-200 flex justify-between items-center'
             }, [
                 // Delete button (only for existing items)
                 item && onDelete ? h('button', {
                     type: 'button',
-                    className: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded flex items-center transition-colors disabled:opacity-50',
+                    className: 'btn-modern bg-red-600 hover:bg-red-700 text-white py-3 px-6 disabled:opacity-50 disabled:cursor-not-allowed',
                     onClick: handleDelete,
                     disabled: isFormDisabled
                 }, [
                     h('span', {
-                        className: 'material-icons text-sm mr-1'
+                        className: 'material-icons text-sm'
                     }, 'delete'),
                     'Verwijderen'
                 ]) : h('div'),
@@ -333,20 +353,20 @@ export default function MenuItemForm({
                 }, [
                     h('button', {
                         type: 'button',
-                        className: 'bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded transition-colors disabled:opacity-50',
+                        className: 'btn-modern bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-6 disabled:opacity-50',
                         onClick: onCancel,
                         disabled: isFormDisabled
                     }, 'Annuleren'),
                     
                     h('button', {
                         type: 'submit',
-                        className: 'bg-brand-blue hover:bg-brand-blue-dark text-white py-2 px-4 rounded flex items-center transition-colors disabled:opacity-50',
+                        className: 'btn-modern btn-primary py-3 px-6 disabled:opacity-50 disabled:cursor-not-allowed',
                         disabled: isFormDisabled
                     }, [
                         isSubmitting ? h('span', {
-                            className: 'material-icons text-sm mr-1 animate-spin'
+                            className: 'material-icons text-sm animate-spin'
                         }, 'refresh') : h('span', {
-                            className: 'material-icons text-sm mr-1'
+                            className: 'material-icons text-sm'
                         }, 'save'),
                         'Opslaan'
                     ])

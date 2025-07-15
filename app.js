@@ -178,36 +178,45 @@ function NavbarEditor() {
     }
 
     return h('div', {
-        className: 'min-h-screen bg-gray-50'
+        className: 'min-h-screen bg-gradient-to-br from-gray-50 to-blue-50'
     }, [
         // Header
         h('header', {
             key: 'header',
-            className: 'sticky top-0 z-40 bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white shadow-md'
+            className: 'sticky top-0 z-40 glass-effect shadow-lg border-b border-white/20'
         }, [
             h('div', {
-                className: 'px-4 py-3 flex justify-between items-center'
+                className: 'px-6 py-4 flex justify-between items-center'
             }, [
                 h('div', {
-                    className: 'flex items-center space-x-2'
+                    className: 'flex items-center space-x-3'
                 }, [
-                    h('span', {
-                        className: 'material-icons'
-                    }, 'edit'),
-                    h('h1', {
-                        className: 'text-xl font-bold'
-                    }, 'Navigatie Menu Editor')
+                    h('div', {
+                        className: 'w-10 h-10 gradient-bg rounded-xl flex items-center justify-center shadow-lg'
+                    }, [
+                        h('span', {
+                            className: 'material-icons text-white'
+                        }, 'edit')
+                    ]),
+                    h('div', {}, [
+                        h('h1', {
+                            className: 'text-2xl font-bold text-gray-800'
+                        }, 'Navigatie Menu Editor'),
+                        h('p', {
+                            className: 'text-sm text-gray-600 mt-1'
+                        }, 'Professionele menu beheer tool')
+                    ])
                 ]),
                 
                 h('div', {
-                    className: 'flex items-center space-x-2'
+                    className: 'flex items-center space-x-3'
                 }, [
                     h('a', {
                         href: `${SHAREPOINT_CONFIG.MENU_PATH}`,
-                        className: 'hover:bg-white/20 px-3 py-1 rounded transition-colors text-sm flex items-center'
+                        className: 'btn-modern btn-primary px-4 py-2 text-sm'
                     }, [
                         h('span', {
-                            className: 'material-icons mr-1 text-sm'
+                            className: 'material-icons text-sm'
                         }, 'arrow_back'),
                         'Terug naar Menu'
                     ])
@@ -218,7 +227,7 @@ function NavbarEditor() {
         // Main content
         h('main', {
             key: 'main',
-            className: 'max-w-7xl mx-auto p-4'
+            className: 'max-w-7xl mx-auto p-6'
         }, [
             // Status bar
             h(StatusBar, {
@@ -232,32 +241,45 @@ function NavbarEditor() {
             // Action bar
             h('div', {
                 key: 'actions',
-                className: 'mb-6 flex justify-between items-center'
+                className: 'mb-8 card-modern p-6'
             }, [
                 h('div', {
-                    className: 'flex items-center space-x-4'
+                    className: 'flex justify-between items-center'
                 }, [
+                    h('div', {
+                        className: 'flex items-center space-x-4'
+                    }, [
+                        h('button', {
+                            className: 'btn-modern btn-secondary px-6 py-3 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed',
+                            onClick: handleCreateItem,
+                            disabled: isLoading || status === STATUS_TYPES.ERROR
+                        }, [
+                            h('span', {
+                                className: 'material-icons text-sm'
+                            }, 'add'),
+                            'Nieuw Menu Item'
+                        ]),
+                        
+                        h('div', {
+                            className: 'text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg'
+                        }, [
+                            h('span', {
+                                className: 'material-icons text-sm mr-1 text-brand-blue-600'
+                            }, 'info'),
+                            `${menuData.items.length} menu items geladen`
+                        ])
+                    ]),
+                    
                     h('button', {
-                        className: 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center space-x-2 transition-colors',
-                        onClick: handleCreateItem,
-                        disabled: isLoading || status === STATUS_TYPES.ERROR
+                        className: 'btn-modern bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 text-sm disabled:opacity-50',
+                        onClick: () => loadMenuItems(),
+                        disabled: isLoading
                     }, [
                         h('span', {
-                            className: 'material-icons text-sm'
-                        }, 'add'),
-                        h('span', {}, 'Nieuw Item')
+                            className: `material-icons text-sm ${isLoading ? 'animate-spin' : ''}`
+                        }, 'refresh'),
+                        'Vernieuwen'
                     ])
-                ]),
-                
-                h('button', {
-                    className: 'bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded flex items-center space-x-2 transition-colors',
-                    onClick: () => loadMenuItems(),
-                    disabled: isLoading
-                }, [
-                    h('span', {
-                        className: `material-icons text-sm ${isLoading ? 'animate-spin' : ''}`
-                    }, 'refresh'),
-                    h('span', {}, 'Vernieuwen')
                 ])
             ]),
             

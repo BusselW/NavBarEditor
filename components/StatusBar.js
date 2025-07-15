@@ -39,33 +39,38 @@ export default function StatusBar({ status, message, listInfo, onRetry }) {
     };
 
     return h('div', {
-        className: `mb-4 p-3 border rounded-lg shadow-sm ${getStatusColor(status)} fade-in`
+        className: `status-bar fade-in ${getStatusColor(status)}`
     }, [
         h('div', {
             key: 'status-row',
             className: 'flex items-center justify-between'
         }, [
             h('div', {
-                className: 'flex items-center'
+                className: 'flex items-center space-x-3'
             }, [
                 getStatusIcon(status),
-                h('span', {
-                    className: 'ml-2 text-sm font-medium'
-                }, message)
+                h('div', {}, [
+                    h('span', {
+                        className: 'text-sm font-semibold text-gray-800'
+                    }, message),
+                    listInfo && h('div', {
+                        className: 'text-xs text-gray-600 mt-1'
+                    }, [
+                        h('div', {}, `📍 ${listInfo.siteUrl}`),
+                        h('div', {}, `📋 ${listInfo.listName} • ${listInfo.itemCount} items`)
+                    ])
+                ])
             ]),
             
             status === STATUS_TYPES.ERROR && onRetry && h('button', {
-                className: 'px-3 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors',
+                className: 'btn-modern bg-red-100 text-red-700 hover:bg-red-200 px-4 py-2 text-sm',
                 onClick: onRetry
-            }, 'Opnieuw proberen')
-        ]),
-        
-        listInfo && h('div', {
-            key: 'list-info',
-            className: 'mt-2 ml-8 text-xs text-gray-600'
-        }, [
-            h('div', {}, `Site: ${listInfo.siteUrl}`),
-            h('div', {}, `Lijst: ${listInfo.listName} (${listInfo.itemCount} items)`)
+            }, [
+                h('span', {
+                    className: 'material-icons text-sm mr-1'
+                }, 'refresh'),
+                'Opnieuw proberen'
+            ])
         ])
     ]);
 }
