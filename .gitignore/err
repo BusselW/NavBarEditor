@@ -1,0 +1,66 @@
+react-dom.development.js:29905 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+(index):64  cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation
+(anonymous) @ (index):64
+react.development.js:199  Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `FullPageLoader`. See https://reactjs.org/link/warning-keys for more information.
+    at LoadingSpinner (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/LoadingSpinner.js:4:42)
+    at FullPageLoader (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/LoadingSpinner.js:43:34)
+    at NavbarEditor (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/app.js:16:33)
+    at ErrorBoundary (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/ErrorBoundary.js:6:9)
+    at App
+printWarning @ react.development.js:199
+react.development.js:199  Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `NavbarEditor`. See https://reactjs.org/link/warning-keys for more information.
+    at span
+    at NavbarEditor (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/app.js:16:33)
+    at ErrorBoundary (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/ErrorBoundary.js:6:9)
+    at App
+printWarning @ react.development.js:199
+react.development.js:199  Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `StatusBar`. See https://reactjs.org/link/warning-keys for more information.
+    at span
+    at StatusBar (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/StatusBar.js:6:37)
+    at main
+    at div
+    at NavbarEditor (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/app.js:16:33)
+    at ErrorBoundary (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/ErrorBoundary.js:6:9)
+    at App
+printWarning @ react.development.js:199
+react.development.js:199  Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `MenuItemsTable`. See https://reactjs.org/link/warning-keys for more information.
+    at span
+    at MenuItemsTable (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/MenuItemsTable.js:8:5)
+    at main
+    at div
+    at NavbarEditor (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/app.js:16:33)
+    at ErrorBoundary (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/ErrorBoundary.js:6:9)
+    at App
+printWarning @ react.development.js:199
+react.development.js:199  Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `TableLoadingSpinner`. See https://reactjs.org/link/warning-keys for more information.
+    at LoadingSpinner (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/LoadingSpinner.js:4:42)
+    at TableLoadingSpinner (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/LoadingSpinner.js:27:39)
+    at tbody
+    at table
+    at div
+    at div
+    at MenuItemsTable (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/MenuItemsTable.js:8:5)
+    at main
+    at div
+    at NavbarEditor (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/app.js:16:33)
+    at ErrorBoundary (https://som.org.om.local/sites/MulderT/T/WebApps/NavBarEditor/components/ErrorBoundary.js:6:9)
+    at App
+printWarning @ react.development.js:199
+/sites/MulderT/_api/web/lists(guid'fc8d9297-dcf5-44ef-8db2-5a38a226e394')/items?$select=Id,Title,URL,ParentID1,ParentID,VolgordeID,Icon&$orderby=VolgordeID%20asc,Title%20asc&$top=5000:1 
+            
+            
+            Failed to load resource: the server responded with a status of 400 (Bad Request)
+sharepointService.js:42  SharePoint API request failed: Object
+makeRequest @ sharepointService.js:42
+app.js:87  Error loading menu items: Object
+loadMenuItems @ app.js:87
