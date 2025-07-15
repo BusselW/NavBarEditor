@@ -49,7 +49,8 @@ export default function IconPicker({ selectedIcon, onIconSelect, onClose }) {
     };
 
     return h('div', {
-        className: 'absolute z-20 mt-2 w-full max-w-lg bg-white border border-gray-300 rounded-lg shadow-lg p-4',
+        className: 'absolute z-20 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg p-4',
+        style: { width: '400px', minWidth: '400px' },
         onKeyDown: handleKeyDown
     }, [
         // Search input
@@ -76,14 +77,14 @@ export default function IconPicker({ selectedIcon, onIconSelect, onClose }) {
             }, filteredIcons.map(icon => 
                 h('div', {
                     key: icon,
-                    className: `p-2 rounded cursor-pointer hover:bg-gray-100 hover:scale-110 transition-all duration-200 flex items-center justify-center ${
+                    className: `w-8 h-8 rounded cursor-pointer hover:bg-gray-100 hover:scale-110 transition-all duration-200 flex items-center justify-center ${
                         selectedIcon === icon ? 'bg-brand-blue text-white' : 'text-gray-600'
                     }`,
                     onClick: () => handleIconClick(icon),
                     title: icon
                 }, [
                     h('span', {
-                        className: 'material-icons text-base'
+                        className: 'material-icons text-lg'
                     }, icon)
                 ])
             ))
